@@ -10,14 +10,14 @@ class GuessingGame:
         master.title("Joe's Mad Lib Quiz")
 
         self.secret_number = random.randint(1, 100)
-        self.guess = []
+        self.guess = ["o","o","o","o",]
         self.num_guesses = 0
         self.num_right = 0
         self.goodboy = 4
         self.message=["The quiz is for my","The Python was name after ","A program is a set of ","A For loop does ","My name is"]
-        self.anslist=["project","Monty","instructions","cycles","Joe"]
+        self.anslist=["a","b","c","d","e"]
         
-        v== StringVar()
+       
         self.label_text = StringVar()
         self.label_text.set(self.message[0])
         self.label = Label(master, textvariable=self.label_text)
@@ -88,9 +88,13 @@ class GuessingGame:
 
     def guess_number(self):
         self.num_guesses += 1
+        self.guess[0]=self.entry.get()
+        self.guess[1]=self.entry1.get()
+        self.guess[2]=self.entry2.get()
+        self.guess[3]=self.entry3.get()
         
 
-        for x in range(0, 3):
+        for x in range(0, 4):
         
             if self.guess[x] is None:
                 self.message = "Time to Play"
@@ -100,14 +104,14 @@ class GuessingGame:
 
         if self.num_right==self.goodboy:
                   
-           self.message = "Congratulations! You guessed the number after %d guess%s." % (self.num_guesses, suffix)
+           self.message = "Congratulations! You guessed the number after %d guess%s." 
            self.guess_button.configure(state=DISABLED)
            self.reset_button.configure(state=NORMAL)
 
        
         self.message = "Congratulations! You guessed the number after %d guess%s." 
         self.label_textR.set(self.message)
-        print (self.guess)
+        print (self.num_right)
 
     def reset(self):
         self.entry.delete(0, END)
