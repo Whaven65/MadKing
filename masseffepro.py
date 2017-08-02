@@ -8,7 +8,11 @@ class GuessingGame:
     def __init__(self, master):
         self.master = master
         master.title("Joe's Mad Lib Quiz")
-
+        
+        EASY=1
+        HARD=2
+        EXPERT=3
+        
         self.secret_number = random.randint(1, 100)
         self.guess = ["o","o","o","o",]
         self.num_guesses = 0
@@ -18,6 +22,9 @@ class GuessingGame:
         self.anslist=["a","b","c","d","e"]
         
        
+        
+    def play_scene(self, level):
+
         self.label_text = StringVar()
         self.label_text.set(self.message[0])
         self.label = Label(master, textvariable=self.label_text)
@@ -45,14 +52,13 @@ class GuessingGame:
 
 
 
-        #vcmd = master.register(self.validate) # we have to wrap the command
         self.entry = Entry(master)
         self.entry1 = Entry(master)
         self.entry2 = Entry(master)
         self.entry3 = Entry(master)
         self.entry4 = Entry(master)
 
-        self.guess_button = Button(master, text="Guess", command=self.guess_number)
+        self.submit_button = Button(master, text="Submit", command=self.guess_number)
         self.reset_button = Button(master, text="Play again", command=self.reset, state=DISABLED)
 
         self.label.grid(row=0, column=0, columnspan=2, sticky=W+E)
@@ -71,6 +77,23 @@ class GuessingGame:
         self.guess_button.grid(row=5, column=0)
         self.reset_button.grid(row=5, column=1)
 
+    def open_scene(self)
+
+        canvas.delete("all")
+
+        self.open_scene_text=Label(master)
+
+        self.easy_button = Button(master, text="Easy", command=lambda:self.play_scene(EASY))
+        self.hard_button = Button(master, text="Hard", command=lambda:self.play_scene(HARD))
+        self.expert_button = Button(master, text="Expert", command=lambda:self.play_scene(EXPERT))
+        
+        self.reset_button = Button(master, text="Play again", command=self.reset, state=DISABLED)
+
+        
+        
+
+        
+
     def validate(self, new_text):
         #if not new_text: # the field is being cleared
          #   self.guess = None
@@ -87,6 +110,7 @@ class GuessingGame:
             return True
 
     def guess_number(self):
+                
         self.num_guesses += 1
         self.guess[0]=self.entry.get()
         self.guess[1]=self.entry1.get()
@@ -102,17 +126,20 @@ class GuessingGame:
             elif self.guess[x] == self.anslist[x]:
                     self.num_right+=1
 
+        canvas.delete("all")
+        
+        self.result_scene_text=Label(master)
+
         if self.num_right==self.goodboy:
                   
            self.message = "Congratulations! You guessed the number after %d guess%s." 
            self.guess_button.configure(state=DISABLED)
            self.reset_button.configure(state=NORMAL)
-
-       
-        self.message = "Congratulations! You guessed the number after %d guess%s." 
-        self.label_textR.set(self.message)
-        print (self.num_right)
-
+        else
+           self.message = "Congratulations! You guessed the number after %d guess%s." 
+           self.result_scene_text.set(self.message)
+           
+        
     def reset(self):
         self.entry.delete(0, END)
         self.secret_number = random.randint(1, 100)
